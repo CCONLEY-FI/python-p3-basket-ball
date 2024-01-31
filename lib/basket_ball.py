@@ -1,3 +1,6 @@
+#! /usr/bin/env python3
+
+
 def game_dict():
     return {
         "home": {
@@ -182,3 +185,135 @@ def game_dict():
             ]
         }
     }
+
+# num_points_per_game()
+# Build a function, num_points_per_game() that takes in an argument of a player's name and returns the number of points per game for that player.
+
+def num_points_per_game(player_name):
+    for game in game_dict().values():
+        for player in game["players"]:
+            if player["name"] == player_name:
+                print(player['points_per_game'])
+
+num_points_per_game("Jarrett Allen")
+
+# player_age()
+# Build a function, player_age(), that takes in an argument of a player's name and returns that player's age.
+
+def player_age(player_name):
+    for game in game_dict().values():
+        for player in game["players"]:
+            if player["name"] == player_name:
+                print(player['age'])
+
+player_age("Jarrett Allen")
+
+# team_colors()
+# Build a function, team_colors(), that takes in an argument of the team name and returns a list of that team's colors.
+
+def team_colors(team_name):
+    for game in game_dict().values():
+        if game["team_name"] == team_name:
+            return game["colors"]
+    return "Team not found"
+
+print(team_colors("Cleveland Cavaliers"))
+# team_names()
+# Build a function, team_names(), that operates on the dictionary to return a list of the team names.
+
+def team_names():
+    teams = []
+    for game in game_dict().values():
+        teams.append(game["team_name"])
+    print(teams)
+
+team_names()
+
+# player_numbers()
+# Build a function, player_numbers(), that takes in an argument of a team name and returns a list of the jersey numbers for that team.
+
+def player_numbers(team_name):
+    numbers = []
+    for game in game_dict().values():
+        if game["team_name"] == team_name:
+            for player in game["players"]:
+                numbers.append(player["number"])
+    print(numbers)
+
+
+player_numbers("Cleveland Cavaliers")
+
+
+# player_stats()
+# Build a function, player_stats(), that takes in an argument of a player's name and returns a dictionary of that player's stats.
+
+def player_stats(player_name):
+    for game in game_dict().values():
+        for player in game["players"]:
+            if player["name"] == player_name:
+                return player
+    return "Player not found"
+
+print(player_stats("Jarrett Allen"))
+
+# CHALLENGE: average_rebounds_by_shoe_brand()
+# Objective: Calculate the average number of rebounds for each shoe brand.
+# Approach:
+# Create a dictionary to track shoe brands and rebounds.
+# Iterate over players, updating the dictionary.
+# Calculate averages for each brand.
+# Print the results.
+
+def average_rebounds_by_shoe_brand():
+    shoe_brand_rebounds = {}
+    shoe_brand_players = {}
+    for game in game_dict().values():
+        for player in game["players"]:
+            if player["shoe_brand"] not in shoe_brand_rebounds:
+                shoe_brand_rebounds[player["shoe_brand"]] = player["rebounds_per_game"]
+                shoe_brand_players[player["shoe_brand"]] = 1
+            else:
+                shoe_brand_rebounds[player["shoe_brand"]] += player["rebounds_per_game"]
+                shoe_brand_players[player["shoe_brand"]] += 1
+    for brand, rebounds in shoe_brand_rebounds.items():
+        average_rebounds = rebounds / shoe_brand_players[brand]
+        print(f"{brand}: {average_rebounds}")
+
+average_rebounds_by_shoe_brand()
+
+# Additional Challenges
+# Find the player with the most career points.
+# Check for common jersey numbers across teams.
+# Identify the player with the longest name.
+
+def most_career_points():
+    most_points = 0
+    player_name = ""
+    for game in game_dict().values():
+        for player in game["players"]:
+            if player["career_points"] > most_points:
+                most_points = player["career_points"]
+                player_name = player["name"]
+    print(f"{player_name} has the most career points with {most_points}.")
+
+most_career_points()
+
+def common_jersey_numbers():
+    jersey_numbers = []
+    for game in game_dict().values():
+        for player in game["players"]:
+            jersey_numbers.append(player["number"])
+    common_numbers = [number for number in set(jersey_numbers) if jersey_numbers.count(number) > 1]
+    print(common_numbers)
+
+common_jersey_numbers()
+
+def longest_name():
+    longest_name = ""
+    for game in game_dict().values():
+        for player in game["players"]:
+            if len(player["name"]) > len(longest_name):
+                longest_name = player["name"]
+    print(longest_name)
+
+longest_name()
